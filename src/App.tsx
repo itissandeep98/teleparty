@@ -5,10 +5,8 @@ import { TabManager } from './components/TabManager';
 import useSocket from './hooks/useSocket';
 
 const App: React.FC = () => {
-    const { client, connected, messages, usersTyping, currentRoomid, handleSendMessage, handleTypingPresence, handleCreateRoom, handleJoinRoom } =
+    const { connected, messages, usersTyping, currentRoomid, handleSendMessage, handleTypingPresence, handleCreateRoom, handleJoinRoom } =
         useSocket();
-
-    console.log('App component:', client, connected, messages, usersTyping, currentRoomid);
 
     return (
         <div className='h-full border-2 border-gray-300 bg-gray-100 p-4 w-full'>

@@ -7,13 +7,13 @@ interface ChatMessageProps {
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     return (
-        <div className='p-4'>
+        <div className=''>
             {message.isSystemMessage ? (
-                <div className='text-gray-500 text-sm italic'>
+                <div className='text-gray-500 text-sm italic p-2 bg-gray-100 rounded-lg shadow-sm'>
                     <strong className='font-semibold'>System:</strong> {message.userNickname} {message.body}
                 </div>
             ) : (
-                <div className='flex items-start space-x-3'>
+                <div className='flex items-start space-x-3 bg-white p-2 rounded-lg shadow-sm'>
                     {message.userIcon && <img src={message.userIcon} alt='User Icon' className='w-8 h-8 rounded-full' />}
                     <div>
                         <strong className='text-blue-600'>{message.userNickname}:</strong>

@@ -1,25 +1,30 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { AvatarSelector } from './AvatarSelector';
 
 interface TabManagerProps {
-    handleCreateRoom: (nickname: string) => void;
-    handleJoinRoom: (roomId: string, nickname: string) => void;
+    handleCreateRoom: (nickname: string, userIcon?: string) => void;
+    handleJoinRoom: (roomId: string, nickname: string, userIcon?: string) => void;
 }
 
 export const TabManager: React.FC<TabManagerProps> = ({ handleCreateRoom, handleJoinRoom }) => {
     const [nickname, setNickname] = useState<string>('');
     const [roomId, setRoomId] = useState<string>('');
+    const [userIcon, setUserIcon] = useState<string | undefined>(undefined);
     const [tabState, setTabState] = useState<number>(0);
 
     const handleCreateRoomClick = () => {
-        handleCreateRoom(nickname);
+        handleCreateRoom(nickname, userIcon);
         setNickname('');
+        setRoomId('');
+        setUserIcon(undefined);
     };
 
     const handleJoinRoomClick = () => {
-        handleJoinRoom(roomId, nickname);
+        handleJoinRoom(roomId, nickname, userIcon);
         setNickname('');
         setRoomId('');
+        setUserIcon(undefined);
     };
 
     return (
@@ -46,6 +51,8 @@ export const TabManager: React.FC<TabManagerProps> = ({ handleCreateRoom, handle
             </div>
             {tabState === 0 ? (
                 <div className='flex items-center gap-4'>
+                    <AvatarSelector setuserIcon={setUserIcon} />
+                    {userIcon && <img src={userIcon} alt={userIcon} className='w-12 h-12 m-2 cursor-pointer hover:scale-110 transition-transform' />}
                     <input
                         type='text'
                         placeholder='Enter your nickname'
@@ -65,6 +72,8 @@ export const TabManager: React.FC<TabManagerProps> = ({ handleCreateRoom, handle
                 </div>
             ) : (
                 <div className='flex items-center gap-4'>
+                    <AvatarSelector setuserIcon={setUserIcon} />
+                    {userIcon && <img src={userIcon} alt={userIcon} className='w-12 h-12 m-2 cursor-pointer hover:scale-110 transition-transform' />}
                     <input
                         type='text'
                         placeholder='Enter your nickname'

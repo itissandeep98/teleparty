@@ -10,7 +10,6 @@ const useSocket = () => {
     const [currentRoomid, setCurrentRoomid] = useState<string | null>(null);
 
     const processMessage = (message: SocketMessage) => {
-        console.log('Received message:', message);
         switch (message.type) {
             case SocketMessageTypes.SEND_MESSAGE:
                 setMessages((prevMessages) => [...prevMessages, message.data]);
@@ -68,7 +67,6 @@ const useSocket = () => {
     };
 
     return {
-        client,
         connected,
         messages,
         usersTyping,
