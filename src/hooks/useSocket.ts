@@ -3,17 +3,29 @@ import { MessageList, SessionChatMessage, SocketMessageTypes, TelepartyClient } 
 import { SocketMessage } from 'teleparty-client/lib/SocketMessage';
 import useSessionStorage from './useSessionStorage';
 
+/**
+ * A custom hook that manages WebSocket connections and chat functionality for Teleparty
+ * Handles room creation, joining, messaging, and typing indicators
+ */
 const useSocket = () => {
+    // Instance of TelepartyClient for managing WebSocket connections
     const [client, setClient] = useState<TelepartyClient | null>(null);
+    // Track connection status to the WebSocket server
     const [connected, setConnected] = useState(false);
+    // Store chat messages for the current room
     const [messages, setMessages] = useState<SessionChatMessage[]>([]);
+    // Track if any users are currently typing
     const [usersTyping, setUsersTyping] = useState(false);
+    // Persist current room details in session storage
     const [currentRoom, setCurrentRoom] = useSessionStorage<{ roomId: string; nickname: string; userIcon?: string } | null>(
         'currentRoom',
         null,
         false
     );
 
+    /**
+     * Process incoming WebSocket messages and update state accordingly
+     */
     const processMessage = (message: SocketMessage) => {
         switch (message.type) {
             case SocketMessageTypes.SEND_MESSAGE:
@@ -25,6 +37,9 @@ const useSocket = () => {
         }
     };
 
+    /**
+     * Event handlers for WebSocket connection lifecycle
+     */
     const eventHandler = {
         onConnectionReady: () => {
             setConnected(true);
@@ -36,11 +51,17 @@ const useSocket = () => {
         onMessage: processMessage,
     };
 
+    /**
+     * Initialize a new WebSocket connection
+     */
     const handleConnection = () => {
         const newClient = new TelepartyClient(eventHandler);
         setClient(newClient);
     };
 
+    /**
+     * Clean up WebSocket connection and reset state
+     */
     const handleDisconnect = () => {
         if (client) {
             client.teardown();
@@ -56,11 +77,15 @@ const useSocket = () => {
     }, []);
 
     useEffect(() => {
+        // If the client is connected and a room is stored in session storage, join the room
         if (currentRoom) {
             handleJoinRoom(currentRoom.roomId, currentRoom.nickname, currentRoom.userIcon);
         }
     }, [connected, client]);
 
+    /**
+     * Send a chat message to the current room
+     */
     const handleSendMessage = (message: string) => {
         if (!client || !currentRoom) return;
         client.sendMessage(SocketMessageTypes.SEND_MESSAGE, {
@@ -68,6 +93,9 @@ const useSocket = () => {
         });
     };
 
+    /**
+     * Update typing indicator status
+     */
     const handleTypingPresence = (data: boolean) => {
         if (!client || !currentRoom) return;
 
@@ -76,6 +104,9 @@ const useSocket = () => {
         });
     };
 
+    /**
+     * Create a new chat room and join it
+     */
     const handleCreateRoom = async (nickname: string, userIcon?: string): Promise<void> => {
         if (!client) return;
         if (currentRoom) {
@@ -86,6 +117,9 @@ const useSocket = () => {
         setCurrentRoom({ roomId, nickname, userIcon });
     };
 
+    /**
+     * Join an existing chat room
+     */
     const handleJoinRoom = async (roomId: string, nickname: string, userIcon?: string): Promise<void> => {
         if (!(client && connected)) return;
         try {
@@ -96,10 +130,14 @@ const useSocket = () => {
             setMessages(response.messages);
         } catch (error) {
             console.log('Error joining room:', error);
+            setCurrentRoom(null);
             alert('Error joining room');
         }
     };
 
+    /**
+     * Leave the current room and disconnect
+     */
     const handleLeaveRoom = () => {
         handleDisconnect();
         setCurrentRoom(null);

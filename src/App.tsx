@@ -18,7 +18,7 @@ const App: React.FC = () => {
     } = useSocket();
 
     return (
-        <div className='h-full border-2 border-gray-300 bg-gray-100 p-4 w-full'>
+        <div className='h-full bg-gray-100 p-4 max-w-7xl my-10 mx-auto rounded'>
             <ConnectionStatus connected={connected} />
             {connected && (
                 <>

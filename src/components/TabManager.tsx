@@ -2,18 +2,32 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { AvatarSelector } from './AvatarSelector';
 
+/**
+ * Props interface for TabManager component
+ * @property isJoined - Boolean indicating if user is in a room
+ * @property handleCreateRoom - Function to create a new room with nickname and optional avatar
+ * @property handleJoinRoom - Function to join an existing room with roomId, nickname and optional avatar
+ */
 interface TabManagerProps {
     isJoined: boolean;
     handleCreateRoom: (nickname: string, userIcon?: string) => void;
     handleJoinRoom: (roomId: string, nickname: string, userIcon?: string) => void;
 }
 
+/**
+ * TabManager Component
+ * Manages room creation and joining interface with tabs
+ * Provides forms for creating new rooms or joining existing ones
+ * Includes avatar selection and nickname input
+ */
 export const TabManager: React.FC<TabManagerProps> = ({ isJoined, handleCreateRoom, handleJoinRoom }) => {
+    // State for form data including nickname, room ID and avatar
     const [formData, setFormData] = useState({
         nickname: '',
         roomId: '',
         userIcon: undefined as string | undefined,
     });
+    // State to track active tab (0 for Create Room, 1 for Join Room)
     const [tabState, setTabState] = useState<number>(0);
 
     const handleCreateRoomClick = () => {

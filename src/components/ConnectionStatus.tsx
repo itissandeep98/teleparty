@@ -1,9 +1,22 @@
+/**
+ * A component that displays the current connection status and provides a reload button when disconnected.
+ */
+
 import clsx from 'clsx';
 
+/**
+ * Props interface for the ConnectionStatus component
+ * @property {boolean} connected - Indicates whether the connection is active
+ */
 interface ConnectionStatusProps {
     connected: boolean;
 }
 
+/**
+ * ConnectionStatus component displays a status indicator and conditional reload button
+ * When connected, shows 'Live' in green
+ * When disconnected, shows 'Reconnecting...' in red with a reload button
+ */
 const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ connected }) => {
     return (
         <div className='flex items-center justify-between p-4 mb-4 bg-white shadow-md rounded-lg'>
