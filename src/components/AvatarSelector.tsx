@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 const ImgBaseURL = 'https://api.dicebear.com/9.x/miniavs/svg?seed=';
 const AVATAR_LIST = [
@@ -20,7 +20,7 @@ const AVATAR_LIST = [
     'Caleb',
 ];
 interface AvatarSelectorProps {
-    setuserIcon: Dispatch<SetStateAction<string | undefined>>;
+    setuserIcon: (icon: string) => void;
 }
 
 export const AvatarSelector: React.FC<AvatarSelectorProps> = ({ setuserIcon }) => {

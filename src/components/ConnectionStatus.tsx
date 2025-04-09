@@ -10,7 +10,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ connected }) => {
             <p>
                 Connection Status:
                 <span className={clsx(' mx-4 font-semibold', { 'text-green-500': connected, 'text-red-500': !connected })}>
-                    {connected ? 'Live' : 'Disconnected'}
+                    {connected ? 'Live' : 'Reconnecting ...'}
                 </span>
             </p>
             {!connected && (
