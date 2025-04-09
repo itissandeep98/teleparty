@@ -25,7 +25,7 @@ const AVATAR_LIST = [
 
 // Props interface for AvatarSelector component
 interface AvatarSelectorProps {
-    setuserIcon: (icon: string) => void; // Function to update the selected avatar in parent component
+    setUserIcon: (icon: string) => void; // Function to update the selected avatar in parent component
 }
 
 /**
@@ -33,13 +33,13 @@ interface AvatarSelectorProps {
  * Provides a dropdown menu with a grid of selectable avatar images
  * Uses DiceBear API to generate unique avatars based on predefined names
  */
-export const AvatarSelector: React.FC<AvatarSelectorProps> = ({ setuserIcon }) => {
+export const AvatarSelector: React.FC<AvatarSelectorProps> = ({ setUserIcon }) => {
     // State to control dropdown visibility
     const [open, setOpen] = useState(false);
 
     // Handler for avatar selection
     const handleSelect = (name: string) => {
-        setuserIcon(name);
+        setUserIcon(name);
         setOpen(false);
     };
 

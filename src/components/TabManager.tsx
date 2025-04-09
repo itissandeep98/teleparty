@@ -66,68 +66,69 @@ export const TabManager: React.FC<TabManagerProps> = ({ isJoined, handleCreateRo
                     Join Room
                 </button>
             </div>
-            {tabState === 0 ? (
-                <div className='flex items-center gap-4'>
-                    <AvatarSelector setuserIcon={(icon) => setFormData((prev) => ({ ...prev, userIcon: icon }))} />
-                    {formData.userIcon && (
-                        <img
-                            src={formData.userIcon}
-                            alt={formData.userIcon}
-                            className='w-12 h-12 m-2 cursor-pointer hover:scale-110 transition-transform'
+            <div className='flex items-center gap-4'>
+                <AvatarSelector setUserIcon={(icon) => setFormData((prev) => ({ ...prev, userIcon: icon }))} />
+                {tabState === 0 ? (
+                    <>
+                        {formData.userIcon && (
+                            <img
+                                src={formData.userIcon}
+                                alt={formData.userIcon}
+                                className='w-12 h-12 m-2 cursor-pointer hover:scale-110 transition-transform'
+                            />
+                        )}
+                        <input
+                            type='text'
+                            placeholder='Enter your nickname'
+                            value={formData.nickname}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, nickname: e.target.value }))}
+                            className='flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                         />
-                    )}
-                    <input
-                        type='text'
-                        placeholder='Enter your nickname'
-                        value={formData.nickname}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, nickname: e.target.value }))}
-                        className='flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                    <button
-                        onClick={handleCreateRoomClick}
-                        disabled={formData.nickname.trim() === ''}
-                        className={clsx('px-6 py-2 text-white bg-green-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400', {
-                            'hover:bg-green-600': formData.nickname.trim() !== '',
-                            'opacity-50 cursor-not-allowed': formData.nickname.trim() === '',
-                        })}>
-                        Create Room
-                    </button>
-                </div>
-            ) : (
-                <div className='flex items-center gap-4'>
-                    <AvatarSelector setuserIcon={(icon) => setFormData((prev) => ({ ...prev, userIcon: icon }))} />
-                    {formData.userIcon && (
-                        <img
-                            src={formData.userIcon}
-                            alt={formData.userIcon}
-                            className='w-12 h-12 m-2 cursor-pointer hover:scale-110 transition-transform'
+                        <button
+                            onClick={handleCreateRoomClick}
+                            disabled={formData.nickname.trim() === ''}
+                            className={clsx('px-6 py-2 text-white bg-green-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400', {
+                                'hover:bg-green-600': formData.nickname.trim() !== '',
+                                'opacity-50 cursor-not-allowed': formData.nickname.trim() === '',
+                            })}>
+                            Create Room
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        {formData.userIcon && (
+                            <img
+                                src={formData.userIcon}
+                                alt={formData.userIcon}
+                                className='w-12 h-12 m-2 cursor-pointer hover:scale-110 transition-transform'
+                            />
+                        )}
+                        <input
+                            type='text'
+                            placeholder='Enter your nickname'
+                            value={formData.nickname}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, nickname: e.target.value }))}
+                            className='flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
                         />
-                    )}
-                    <input
-                        type='text'
-                        placeholder='Enter your nickname'
-                        value={formData.nickname}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, nickname: e.target.value }))}
-                        className='flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                    <input
-                        type='text'
-                        placeholder='Enter room ID'
-                        value={formData.roomId}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, roomId: e.target.value }))}
-                        className='flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    />
-                    <button
-                        onClick={handleJoinRoomClick}
-                        disabled={formData.nickname.trim() === '' || formData.roomId.trim() === ''}
-                        className={clsx('px-6 py-2 text-white bg-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400', {
-                            'hover:bg-blue-600': formData.nickname.trim() !== '' && formData.roomId.trim() !== '',
-                            'opacity-50 cursor-not-allowed': formData.nickname.trim() === '' || formData.roomId.trim() === '',
-                        })}>
-                        Join Room
-                    </button>
-                </div>
-            )}
+                        <input
+                            type='text'
+                            placeholder='Enter room ID'
+                            value={formData.roomId}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, roomId: e.target.value }))}
+                            className='flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                        />
+                        <button
+                            onClick={handleJoinRoomClick}
+                            disabled={formData.nickname.trim() === '' || formData.roomId.trim() === ''}
+                            className={clsx('px-6 py-2 text-white bg-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400', {
+                                'hover:bg-blue-600': formData.nickname.trim() !== '' && formData.roomId.trim() !== '',
+                                'opacity-50 cursor-not-allowed': formData.nickname.trim() === '' || formData.roomId.trim() === '',
+                            })}>
+                            Join Room
+                        </button>
+                    </>
+                )}
+            </div>
         </div>
     );
 };
